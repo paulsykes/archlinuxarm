@@ -110,9 +110,15 @@ _tag=1326fe9d4c85cca1ee774b072ef4fa337694f2e7
 source=(
   git+https://git.ffmpeg.org/ffmpeg.git?signed#tag=${_tag}
   add-av_stream_get_first_dts-for-chromium.patch
+  ffmpeg-001-v4l2-drmprime.patch
+  ffmpeg-001-v4l2-request.patch
+  ffmpeg-001-vf-deinterlace-v4l2m2m.patch
 )
 b2sums=('SKIP'
-        '555274228e09a233d92beb365d413ff5c718a782008075552cafb2130a3783cf976b51dfe4513c15777fb6e8397a34122d475080f2c4483e8feea5c0d878e6de')
+        '555274228e09a233d92beb365d413ff5c718a782008075552cafb2130a3783cf976b51dfe4513c15777fb6e8397a34122d475080f2c4483e8feea5c0d878e6de'
+        'SKIP'
+        'SKIP'
+        'SKIP')
 validpgpkeys=(DD1EC9E8DE085C629B3E1846B18E8928B3948D64) # Michael Niedermayer <michael@niedermayer.cc>
 
 prepare() {
@@ -187,7 +193,8 @@ build() {
     --enable-vulkan \
     --enable-libudev \
     --enable-v4l2-m2m \
-    --enable-v4l2_request $CONFIG
+    --enable-v4l2_request \
+    $CONFIG
   make
   make tools/qt-faststart
   make doc/ff{mpeg,play}.1
