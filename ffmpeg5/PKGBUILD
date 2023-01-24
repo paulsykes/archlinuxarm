@@ -117,7 +117,11 @@ validpgpkeys=(DD1EC9E8DE085C629B3E1846B18E8928B3948D64) # Michael Niedermayer <m
 
 prepare() {
   cd ffmpeg
-  patch -Np1 -i ../patches/add-av_stream_get_first_dts-for-chromium.patch # https://crbug.com/1251779
+  patch -Np1 -i ../add-av_stream_get_first_dts-for-chromium.patch # https://crbug.com/1251779
+  # https://github.com/HiassofT/LibreELEC.tv/tree/le11-ffmpeg-5.1.2
+  patch -Np1 -i ../ffmpeg-001-v4l2-drmprime.patch
+  patch -Np1 -i ../ffmpeg-001-v4l2-request.patch
+  patch -Np1 -i ../ffmpeg-001-vf-deinterlace-v4l2m2m.patch
 }
 
 pkgver() {
@@ -180,7 +184,10 @@ build() {
     --enable-opengl \
     --enable-shared \
     --enable-version3 \
-    --enable-vulkan $CONFIG
+    --enable-vulkan \
+    --enable-libudev \
+    --enable-v4l2-m2m \
+    --enable-v4l2_request $CONFIG
   make
   make tools/qt-faststart
   make doc/ff{mpeg,play}.1
