@@ -99,8 +99,22 @@ options=(
   debug
 )
 _tag=3d69f9682f06bbf72e0cdcdc9e66c9307ed6b24f
-source=(git+https://git.ffmpeg.org/ffmpeg.git#tag=${_tag})
-b2sums=('SKIP')
+source=(git+https://git.ffmpeg.org/ffmpeg.git#tag=${_tag}
+        ffmpeg-001-v4l2-drmprime.patch
+        ffmpeg-001-v4l2-request.patch
+        ffmpeg-0002-WIP-deint-filter.patch
+        ffmpeg-0003-libavfilter-v4l2deinterlace-dequeue-both-destination.patch
+        ffmpeg-0006-deint_v4l2m2m-increase-input-and-output-buffers.patch
+        ffmpeg-0006-libavfilter-v4l2deinterlace-support-more-formats-aut.patch
+)
+b2sums=('SKIP'
+        '2396ab0b8d4d81135a9cbe7da9666c059ce5a72055b1bc458b5a0ec7eae67097487f3f89c14ee4f6ba222baff2218b69cbf6d01aa2c596967c83f0c9abaf493a'
+        'd69189fe5bcad59636b49aa2cfcd70ac58d7eae26570342df79591f53399ca0f440a4863e7f41b6324e8c552d2642a020ee3678681abd839e8546d9d08990f4f'
+        '1808729d2c695fcd91e640788d869724ebe6b178b59d47984e0044119aed04361386b552cc793c1958d64e7dff6a9ea0c7477ba3b2f22b1b285a155970727898'
+        '4aca4b0732d4a22b49a682871e0d5e44b4b724832e12f4494f5d9a828855825b3461012362683ffc473294254fbb3c1d51e686aca99121cec3587070aae58c62'
+        '6432804400778a145b2f147bef0402ca2a2462d8f07904ec9ea269a91a007b4b8f4673b3d071c55ec472226b0325ba473cc9ee3a2a9758e9a180cdc1af9c7c0e'
+        '360b4e53e1349c8d139e46c6d3bfc991c815b48c6e4fb7a4da8b54ab83e835754d8d4568572fcf599c241447845dfb9d8bbe9a74b4cd0a8eebf26da497e8eb8e'
+)
 
 pkgver() {
   cd ffmpeg
@@ -110,6 +124,13 @@ pkgver() {
 prepare() {
   cd ffmpeg
   git cherry-pick -n 988f2e9eb063db7c1a678729f58aab6eba59a55b # fix nvenc on older gpus
+  # https://github.com/LibreELEC/LibreELEC.tv/tree/08ad88dd0ab9f714489c279f9f3204dcca3722bc/packages/multimedia/ffmpeg/patches
+  patch -Np1 -i ../ffmpeg-001-v4l2-drmprime.patch
+  patch -Np1 -i ../ffmpeg-001-v4l2-request.patch
+  patch -Np1 -i ../ffmpeg-0002-WIP-deint-filter.patch
+  patch -Np1 -i ../ffmpeg-0003-libavfilter-v4l2deinterlace-dequeue-both-destination.patch
+  patch -Np1 -i ../ffmpeg-0006-deint_v4l2m2m-increase-input-and-output-buffers.patch
+  patch -Np1 -i ../ffmpeg-0006-libavfilter-v4l2deinterlace-support-more-formats-aut.patch
 }
 
 build() {
@@ -169,6 +190,9 @@ build() {
     --enable-libzimg \
     --enable-shared \
     --enable-version3 \
+    --enable-libudev \
+    --enable-v4l2-m2m \
+    --enable-v4l2_request \
     $CONFIG
 
   make
