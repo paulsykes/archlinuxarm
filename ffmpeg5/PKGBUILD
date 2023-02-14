@@ -191,6 +191,7 @@ build() {
     --enable-opengl \
     --enable-shared \
     --enable-version3 \
+    --enable-vulkan \
     --enable-libudev \
     --enable-v4l2-m2m \
     --enable-v4l2_request \
