@@ -108,7 +108,7 @@ options=(
 )
 _tag=1326fe9d4c85cca1ee774b072ef4fa337694f2e7
 source=(
-  git+https://git.ffmpeg.org/ffmpeg.git?signed#tag=${_tag}
+  git+https://git.ffmpeg.org/ffmpeg.git?#tag=${_tag}
   add-av_stream_get_first_dts-for-chromium.patch
   ffmpeg-001-v4l2-drmprime.patch
   ffmpeg-001-v4l2-request.patch
@@ -120,7 +120,6 @@ b2sums=('SKIP'
         'b3c34c824f60b2e97306bca852189ce5d29a0663aa33fabbd225a1336e1afb2e4500c48a23a6aab5b50a152b0146de01392dbec2c5817aef458cdd8be2deee11'
         '7fc5d34be98b973c03336aad547525a5579f31b0df28dbc26e9c763653017d72990b5124362ed3f9fff790adcc8d48154b2233d3aeb13c0549b2e0f32cad2f4c'
 )
-validpgpkeys=(DD1EC9E8DE085C629B3E1846B18E8928B3948D64) # Michael Niedermayer <michael@niedermayer.cc>
 
 prepare() {
   cd ffmpeg
